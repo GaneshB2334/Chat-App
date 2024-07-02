@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
+import { RemoveRedEye, VisibilityOff } from '@mui/icons-material';
 
 export default function Register() {
   const navigate = useNavigate();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isCnfPasswordVisible, setIsCnfPasswordVisible] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('chat-app-user');
@@ -71,7 +74,7 @@ export default function Register() {
   return (
     <div className="flex h-screen w-screen items-center justify-center">
       <div className='shadow-md p-5 bg-darkest text-litest'>
-      <h1 className='w-full text-center text-4xl  my-4 font-sans'>Register</h1>
+        <h1 className='w-full text-center text-4xl  my-4 font-sans'>Register</h1>
         <form>
           <div className='flex w-full justify-center'>
             <div className='relative'>
@@ -87,25 +90,63 @@ export default function Register() {
             <label htmlFor="fullname">
               Fullname
             </label>
-            <input className='p-3 rounded-md w-full outline-none' type="text" required id='fullname' name='fullname' value={formdata.fullname} onChange={handleChange} />
+            <input className='text-black p-3 rounded-md w-full outline-none' type="text" required id='fullname' name='fullname' value={formdata.fullname} onChange={handleChange} />
           </div>
           <div className='text-xl flex flex-col gap-2'>
             <label htmlFor="username">
               Username
             </label>
-            <input className='p-3 rounded-md w-full outline-none' type="text" required id='username' name='username' value={formdata.username} onChange={handleChange} />
+            <input className='text-black p-3 rounded-md w-full outline-none' type="text" required id='username' name='username' value={formdata.username} onChange={handleChange} />
           </div>
           <div className='text-xl flex flex-col gap-2'>
             <label htmlFor="fullname">
               Password
             </label>
-            <input className='p-3 rounded-md w-full outline-none' type="password" required id='password' name='password' value={formdata.password} onChange={handleChange} />
+            <div className='w-full relative'>
+              <input className='p-3 rounded-md w-[90%] outline-none text-black' type={isPasswordVisible ? 'text' : 'password'} required id='password' name='password' value={formdata.password} onChange={handleChange} />
+              <div className='absolute right-0 top-2 w-[10%]'>
+                <IconButton
+                  sx={{
+                    color: "white"
+                  }}
+                  onClick={() => {
+                    setIsPasswordVisible(!isPasswordVisible);
+                  }}
+                >
+                  {
+                    isPasswordVisible ?
+                      <RemoveRedEye />
+                      :
+                      <VisibilityOff />
+                  }
+                </IconButton>
+              </div>
+            </div>
           </div>
           <div className='text-xl flex flex-col gap-2'>
-            <label htmlFor="cnfPassword">
+            <label htmlFor="fullname">
               Confirm Password
             </label>
-            <input className='p-3 rounded-md w-full outline-none' type="password" required id='cnfPassword' name='cnfPassword' value={formdata.cnfPassword} onChange={handleChange} />
+            <div className='w-full relative'>
+              <input className='p-3 rounded-md w-[90%] outline-none text-black' type={isCnfPasswordVisible ? 'text' : 'password'} required id='cnfPassword' name='cnfPassword' value={formdata.cnfPassword} onChange={handleChange} />
+              <div className='absolute right-0 top-2 w-[10%]'>
+                <IconButton
+                  sx={{
+                    color: "white"
+                  }}
+                  onClick={() => {
+                    setIsCnfPasswordVisible(!isCnfPasswordVisible);
+                  }}
+                >
+                  {
+                    isCnfPasswordVisible ?
+                      <RemoveRedEye />
+                      :
+                      <VisibilityOff />
+                  }
+                </IconButton>
+              </div>
+            </div>
           </div>
 
           <button type='submit' className='w-full text-center py-3 bg-darker my-5' onClick={handleRegister}>
