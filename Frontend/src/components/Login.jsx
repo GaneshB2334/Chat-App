@@ -3,10 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useAuthContext } from '../context/AuthContext';
+import { RemoveRedEye, VisibilityOff } from "@mui/icons-material";
+import { IconButton } from '@mui/material';
 
 export default function Login() {
     const navigate = useNavigate();
-    const {setAuthUser} = useAuthContext();
+    const { setAuthUser } = useAuthContext();
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('chat-app-user');
@@ -42,7 +45,7 @@ export default function Login() {
 
                 localStorage.setItem("chat-app-user", JSON.stringify(result.data));
                 setAuthUser(result.data);
-                
+
                 setTimeout(() => {
                     navigate('/home')
                 }, 1000);
@@ -67,13 +70,32 @@ export default function Login() {
                         <label htmlFor="username">
                             Username
                         </label>
-                        <input className='p-3 rounded-md w-full outline-none' type="text" required id='username' name='username' value={formdata.username} onChange={handleChange} />
+                        <input className='p-3 rounded-md w-full outline-none text-black' type="text" required id='username' name='username' value={formdata.username} onChange={handleChange} />
                     </div>
                     <div className='text-xl flex flex-col gap-2'>
                         <label htmlFor="fullname">
                             Password
                         </label>
-                        <input className='p-3 rounded-md w-full outline-none' type="password" required id='password' name='password' value={formdata.password} onChange={handleChange} />
+                        <div className='w-full relative'>
+                            <input className='p-3 rounded-md w-[90%] outline-none text-black' type={isPasswordVisible ? 'text' : 'password'} required id='password' name='password' value={formdata.password} onChange={handleChange} />
+                            <div className='absolute right-0 top-2 w-[10%]'>
+                                <IconButton
+                                    sx={{
+                                        color: "white"
+                                    }}
+                                    onClick={() => {
+                                        setIsPasswordVisible(!isPasswordVisible);
+                                    }}
+                                >
+                                    {
+                                        isPasswordVisible ?
+                                            <RemoveRedEye />
+                                            :
+                                            <VisibilityOff />
+                                    }
+                                </IconButton>
+                            </div>
+                        </div>
                     </div>
                     <button type='submit' className='w-full text-center py-3 bg-darker my-5' onClick={handleLogin}>
                         Login
