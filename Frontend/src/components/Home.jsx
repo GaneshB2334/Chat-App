@@ -39,7 +39,7 @@ const Home = () => {
     const socket = useMemo(() => io('http://localhost:5000', {
         withcredentials: true,
         query: {
-            userId: authUser._id
+            userId: authUser?._id
         }
     }), []);
 
