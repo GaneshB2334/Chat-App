@@ -4,12 +4,12 @@ import React from 'react'
 
 const Nav = ({ setIsProfileOption, setConfirmState, profile, username }) => {
     return (
-        <div className='bg-darkest h-[80px] px-2 m-5 flex items-center justify-around overflow-hidden rounded-full'>
+        <div className='bg-darkest h-20 px-2 m-5 flex items-center justify-around overflow-hidden rounded-full'>
             <div className='flex-grow text-white text-center text-3xl font-sans flex items-center gap-5'>
                 <Tooltip title="View Profile">
                     <Avatar sx={{
-                        height: "70px",
-                        width: "70px"
+                        height: "4rem",
+                        width: "4rem"
                     }} src={profile ? profile : null} />
                 </Tooltip>
                 <Tooltip title={username}>
@@ -17,13 +17,6 @@ const Nav = ({ setIsProfileOption, setConfirmState, profile, username }) => {
                 </Tooltip>
             </div>
             <div className='flex gap-5'>
-                <Tooltip title="Notifications">
-                    <IconButton>
-                        <Notifications sx={{
-                            color:"white"
-                        }}/>
-                    </IconButton>
-                </Tooltip>
                 <Tooltip title="Settings">
                     <IconButton onClick={() => { setIsProfileOption(true) }}>
                         <Settings sx={{

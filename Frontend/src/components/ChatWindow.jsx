@@ -10,6 +10,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
     const messageEndRef = useRef(null);
     const [tempImg, setTempImg] = useState(false);
     const [isTempImgSent, setisTempImgSent] = useState(true);
+    const [prevDate, setPrevDate] = useState('');
 
     const getFormattedDate = (date) => {
         const newDate = new Date(date);
@@ -37,7 +38,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
     }
 
     const HandleTempImg = async () => {
-        if(!message){
+        if (!message) {
             return;
         }
         setisTempImgSent(false);
@@ -48,14 +49,15 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
                 setisTempImgSent(true);
                 setTempImg(false);
             });
-            setAllMsg((prevMsgs) => [...prevMsgs, {
-                receiverId: currentChat._id,
-                message,
-                createdAt: new Date(),
-            }]);
+        setAllMsg((prevMsgs) => [...prevMsgs, {
+            receiverId: currentChat._id,
+            message,
+            createdAt: new Date(),
+        }]);
     }
+
     return (
-        <div className='flex flex-col border h-[85vh] bg-darkest p-0 border-[#444343] w-[65%] max-xl:w-[55%] max-lg:w-[45%] max-md:hidden' >
+        <div className={`flex flex-col h-[85vh] bg-darkest p-0 w-[65%] max-xl:w-[55%] max-lg:w-[45%] ${currentChat ? "max-md:w-[90%]" : "max-md:hidden"} border-l-2 border-black`} >
             <div className='flex items-center px-5 py-3 h-[70px] content-center text-litest'>
                 <Avatar sx={{ height: "50px", width: "50px" }} src={currentChat ? currentChat.profile : null} />
                 <p className='flex-grow text-center text-2xl text-litest'>{currentChat ? currentChat.fullname : "Username"}</p>
@@ -84,9 +86,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
                                             Send a message to start conversation!
                                         </div> :
                                         allMsg.map((msg, index) => {
-                                            return (
-                                                <Message key={index} getFormattedDate={getFormattedDate} currentChat={currentChat} msg={msg} />
-                                            )
+                                            return (<Message key={index} getFormattedDate={getFormattedDate} currentChat={currentChat} msg={msg} />)
                                         })
                                 }
                                 <div ref={messageEndRef} />
@@ -106,13 +106,13 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
                         bottom: "0",
                         right: "0",
                     }}
-                    onClick={HandleTempImg}
+                        onClick={HandleTempImg}
                     >
                         {
                             isTempImgSent ?
-                            <Send color='primary' />
-                            :
-                            <CircularProgress size={20} color='primary' />
+                                <Send color='primary' />
+                                :
+                                <CircularProgress size={20} color='primary' />
 
                         }
                     </IconButton>

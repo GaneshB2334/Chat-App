@@ -133,9 +133,9 @@ const Home = () => {
         <>
             <div className='flex flex-col'>
                 <Nav setIsProfileOption={setIsProfileOption} profile={profile} setConfirmState={setConfirmState} username={username} />
-                <div className='flex flex-grow justify-center'>
+                <div className='flex justify-center'>
 
-                    <UserList HandleSearch={HandleSearch} LoadCurrentChat={LoadCurrentChat} Search={Search} allUsers={allUsers} loading={loading} searchResult={searchResult}/>
+                    <UserList currentChat={currentChat} HandleSearch={HandleSearch} LoadCurrentChat={LoadCurrentChat} Search={Search} allUsers={allUsers} loading={loading} searchResult={searchResult}/>
 
                     <ChatWindow HandleSend={HandleSend} setAllMsg={setAllMsg} isMessageSent={isMessageSent} allMsg={allMsg} setIsMsgLoaded={setIsMsgLoaded} setIsMessageSent={setIsMessageSent} ImageToSend={ImageToSend} currentChat={currentChat} isPickerVisible={isPickerVisible} message={message} setMessage={setMessage} setCurrentChat={setCurrentChat} setIsPickerVisible={setIsPickerVisible} isMsgLoaded={isMsgLoaded} />
 

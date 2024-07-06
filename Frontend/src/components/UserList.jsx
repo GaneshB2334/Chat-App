@@ -2,14 +2,14 @@ import React from 'react'
 import User from './User'
 import { CircularProgress } from '@mui/material'
 
-const UserList = ({ Search, loading, LoadCurrentChat, HandleSearch, allUsers, searchResult }) => {
+const UserList = ({ Search, loading, LoadCurrentChat, HandleSearch, allUsers, searchResult, currentChat }) => {
     return (
-        <div className=' border-2 text-white h-[85vh] bg-darkest border-[#444343] border-r-0 w-[30%] max-xl:w-[40%] max-lg:w-[45%] max-md:w-[90%] '>
+        <div className={`text-white h-[85vh] bg-darkest w-[30%] max-xl:w-[40%] max-lg:w-[45%] ${currentChat ? "max-md:hidden" : "max-md:w-[90%]"} max-md:h-[calc(100vh-10rem)] `}>
             <div className='w-full p-2 m-0 h-[70px] content-center '>
                 <input type="text" placeholder='Search...' value={Search} onChange={HandleSearch} className='w-full p-3 rounded-xl outline-none text-black' />
             </div>
 
-            <div className='w-full p-1 overflow-scroll h-[75vh] max-md:h-[80vh] shadow-inner shadow-black'>
+            <div className='w-full p-1 overflow-scroll'>
                 {!loading ?
 
                     Search ?
