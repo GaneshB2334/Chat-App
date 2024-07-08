@@ -4,12 +4,22 @@ import EmojiPicker from 'emoji-picker-react';
 import React, { useEffect, useRef, useState } from 'react';
 import Message from '../assets/Message';
 import axios from 'axios';
+import { io } from 'socket.io-client';
+import { useAuthContext } from '../context/AuthContext';
 
 const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoaded, setCurrentChat, setIsPickerVisible, setMessage, message, ImageToSend, isPickerVisible, currentChat, isMsgLoaded }) => {
 
     const messageEndRef = useRef(null);
     const [tempImg, setTempImg] = useState(false);
     const [isTempImgSent, setisTempImgSent] = useState(true);
+    const {authUser} = useAuthContext();
+
+    const socket = useMemo(() => io('https://vercel-deployment-server-trial.vercel.app', {
+        withcredentials: true,
+        query: {
+            userId: authUser?._id
+        }
+    }), []);
 
     const getFormattedDate = (date) => {
         const newDate = new Date(date);
@@ -21,6 +31,24 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
             messageEndRef.current.scrollIntoView();
         }
     }, [allMsg]);
+
+    useEffect(() => {
+        socket.on('connect', () => {
+            console.log('Connected to server', socket.id);
+        });
+
+        socket.on('recieve-message', (msg) => {
+            console.log('Message recieved-->', msg);
+            setAllMsg((prevMsgs) => [...prevMsgs, msg]);
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+        return () => {
+            console.log("Disconnected from server");
+        }
+    }, []);
 
     const SendImageToUser = (e) => {
         const file = e.target.files[0];

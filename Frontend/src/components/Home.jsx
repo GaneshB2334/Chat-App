@@ -36,13 +36,6 @@ const Home = () => {
     const ImageToSend = useRef(null);
     const { loading, allUsers } = useGetAllUsers();
 
-    const socket = useMemo(() => io('https://vercel-deployment-server-trial.vercel.app', {
-        withcredentials: true,
-        query: {
-            userId: authUser?._id
-        }
-    }), []);
-
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('chat-app-user'));
         if (!token) {
@@ -51,22 +44,6 @@ const Home = () => {
             setProfile(token.profile);
             setUsername(token.fullname);
             console.log(allUsers);
-
-            socket.on('connect', () => {
-                console.log('Connected to server', socket.id);
-            });
-
-            socket.on('recieve-message', (msg) => {
-                console.log('Message recieved-->', msg);
-                setAllMsg((prevMsgs) => [...prevMsgs, msg]);
-            });
-
-            socket.on('disconnect', () => {
-                console.log('Disconnected from server');
-            });
-        }
-        return () => {
-            console.log("Disconnected from server");
         }
     }, []);
 
