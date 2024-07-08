@@ -36,7 +36,7 @@ const Home = () => {
     const ImageToSend = useRef(null);
     const { loading, allUsers } = useGetAllUsers();
 
-    const socket = useMemo(() => io('http://localhost:5000', {
+    const socket = useMemo(() => io('/', {
         withcredentials: true,
         query: {
             userId: authUser?._id
@@ -116,7 +116,7 @@ const Home = () => {
         setIsMessageSent(false);
 
 
-        await axios.post(`api/messages/send/${currentChat._id}`, { message })
+        await axios.post(`/api/messages/send/${currentChat._id}`, { message })
             .catch(err => { console.log("error in sending message --> ", err) })
             .finally(() => {
                 setMessage("")

@@ -10,7 +10,6 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
     const messageEndRef = useRef(null);
     const [tempImg, setTempImg] = useState(false);
     const [isTempImgSent, setisTempImgSent] = useState(true);
-    const [prevDate, setPrevDate] = useState('');
 
     const getFormattedDate = (date) => {
         const newDate = new Date(date);
@@ -42,7 +41,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
             return;
         }
         setisTempImgSent(false);
-        await axios.post(`api/messages/send/${currentChat._id}`, { message })
+        await axios.post(`/api/messages/send/${currentChat._id}`, { message })
             .catch(err => { console.log("error in sending message --> ", err) })
             .finally(() => {
                 setMessage("")

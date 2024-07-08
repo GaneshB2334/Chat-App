@@ -1,4 +1,4 @@
-import { Logout, Notifications, Person, Settings } from '@mui/icons-material'
+import { Logout, Settings } from '@mui/icons-material'
 import { Avatar, IconButton, Tooltip } from '@mui/material'
 import React from 'react'
 
