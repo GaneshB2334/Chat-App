@@ -28,7 +28,7 @@ export default function Login() {
         const { username, password } = formdata;
         const toastId = toast.loading("Logging in...")
         try {
-            const result = await axios.post('http://localhost:5000/api/auth/login', { username, password }, {
+            const result = await axios.post('https://vercel-deployment-server-trial.vercel.app/api/auth/login', { username, password }, {
                 withCredentials: true
             });
             console.log(result.data);
