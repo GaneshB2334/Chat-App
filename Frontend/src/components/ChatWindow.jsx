@@ -1,7 +1,7 @@
 import { AttachFile, Close, EmojiEmotions, Send } from '@mui/icons-material';
 import { Avatar, CircularProgress, IconButton, Tooltip } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Message from '../assets/Message';
 import axios from 'axios';
 import { io } from 'socket.io-client';

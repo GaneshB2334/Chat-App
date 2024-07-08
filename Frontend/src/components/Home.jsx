@@ -9,7 +9,6 @@ import UserList from './UserList.jsx'
 import ChatWindow from './ChatWindow.jsx'
 import useGetAllUsers from '../hooks/useGetAllUsers.js';
 import toast from 'react-hot-toast';
-import { io } from 'socket.io-client';
 import { useAuthContext } from '../context/AuthContext.jsx';
 
 const Home = () => {
