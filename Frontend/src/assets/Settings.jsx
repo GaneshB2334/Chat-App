@@ -22,7 +22,7 @@ const Settings = ({ setIsProfileOption, setIsLargeView, HandleProfileRemove, set
 
             const toastId = toast.loading('Updating Profile...');
             try {
-                const res = await axios.put("http://localhost:5000/api/users", { profile: newProfile }, { withCredentials: true });
+                const res = await axios.put("https://vercel-deployment-server-trial.vercel.app/api/users", { profile: newProfile }, { withCredentials: true });
                 console.log(res.data);
                 let user = JSON.parse(localStorage.getItem("chat-app-user"));
                 user.profile = newProfile;

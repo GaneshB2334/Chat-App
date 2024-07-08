@@ -6,7 +6,7 @@ import axios from "axios";
 const ConfirmBlock = ({ setConfirmState, header }) => {
     const navigate = useNavigate();
     const HandleLogout = async () => {
-        await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true })
+        await axios.post("https://vercel-deployment-server-trial.vercel.app/api/auth/logout", {}, { withCredentials: true })
             .then(res => {
                 console.log(res.data);
             }).catch(err => {

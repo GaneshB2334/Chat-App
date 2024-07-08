@@ -8,7 +8,7 @@ const useGetAllUsers = () => {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            await axios.get('/api/users', { withCredentials: true })
+            await axios.get('https://vercel-deployment-server-trial.vercel.app/api/users', { withCredentials: true })
                 .then((res) => {
                     console.log(res.data);
                     setAllUsers(res.data);

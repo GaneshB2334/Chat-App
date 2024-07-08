@@ -41,7 +41,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
             return;
         }
         setisTempImgSent(false);
-        await axios.post(`/api/messages/send/${currentChat._id}`, { message })
+        await axios.post(`https://vercel-deployment-server-trial.vercel.app/api/messages/send/${currentChat._id}`, { message })
             .catch(err => { console.log("error in sending message --> ", err) })
             .finally(() => {
                 setMessage("")

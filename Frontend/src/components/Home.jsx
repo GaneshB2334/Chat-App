@@ -88,7 +88,7 @@ const Home = () => {
         setCurrentChat(allUsers[index]);
         setIsMsgLoaded(false);
         (async () => {
-            await axios.get(`/api/messages/${allUsers[index]._id}`)
+            await axios.get(`https://vercel-deployment-server-trial.vercel.app/api/messages/${allUsers[index]._id}`)
                 .then(res => {
                     setAllMsg(res.data.messages);
                     console.log(res.data.messages);
@@ -116,7 +116,7 @@ const Home = () => {
         setIsMessageSent(false);
 
 
-        await axios.post(`/api/messages/send/${currentChat._id}`, { message })
+        await axios.post(`https://vercel-deployment-server-trial.vercel.app/api/messages/send/${currentChat._id}`, { message })
             .catch(err => { console.log("error in sending message --> ", err) })
             .finally(() => {
                 setMessage("")
