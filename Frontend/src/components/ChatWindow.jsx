@@ -19,7 +19,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
         query: {
             userId: authUser?._id
         }
-    }), []);
+    }), [authUser]);
 
     const getFormattedDate = (date) => {
         const newDate = new Date(date);
@@ -46,7 +46,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
             console.log('Disconnected from server');
         });
         return () => {
-            console.log("Disconnected from server");
+            console.log("Disconnected from server after return");
         }
     }, []);
 

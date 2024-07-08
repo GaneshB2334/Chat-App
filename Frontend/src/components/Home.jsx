@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ConfirmBlock from '../assets/ConfirmBlock.jsx'
 import LargeView from '../assets/LargeView.jsx'
@@ -9,11 +9,9 @@ import UserList from './UserList.jsx'
 import ChatWindow from './ChatWindow.jsx'
 import useGetAllUsers from '../hooks/useGetAllUsers.js';
 import toast from 'react-hot-toast';
-import { useAuthContext } from '../context/AuthContext.jsx';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { authUser } = useAuthContext();
 
     const [Search, setSearch] = useState('');
     const [message, setMessage] = useState('');
