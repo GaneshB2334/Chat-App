@@ -7,7 +7,7 @@ export default defineConfig({
 		port: 3000,
 		proxy: {
 			"/api": {
-				target: "https://vercel-deployment-server-trial.vercel.app/",
+				target: "https://vercel-deployment-server-trial.vercel.app",
 				changeOrigin: true,
 				secure: false,
 			},
