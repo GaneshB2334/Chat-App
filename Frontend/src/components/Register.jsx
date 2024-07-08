@@ -36,7 +36,7 @@ export default function Register() {
       return;
     }
     const toastId = toast.loading("Loading...")
-    await axios.post('http://localhost:5000/api/auth/register', formdata)
+    await axios.post('https://vercel-deployment-server-trial.vercel.app/api/auth/register', formdata)
       .then((result) => {
         console.log(result.data);
         if (result.data === "AlreadyPresent") {
@@ -49,6 +49,8 @@ export default function Register() {
           navigate("/home")
         }
       }).catch((err) => {
+        toast.dismiss(toastId);
+        toast.error('An error occurred. Please try again.');
         console.log(err);
       });
   }
