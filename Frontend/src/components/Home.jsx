@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ConfirmBlock from '../assets/ConfirmBlock.jsx'
 import LargeView from '../assets/LargeView.jsx'
@@ -9,9 +9,12 @@ import UserList from './UserList.jsx'
 import ChatWindow from './ChatWindow.jsx'
 import useGetAllUsers from '../hooks/useGetAllUsers.js';
 import toast from 'react-hot-toast';
+import { io } from 'socket.io-client';
+import { useAuthContext } from '../context/AuthContext.jsx';
 
 const Home = () => {
     const navigate = useNavigate();
+    const { authUser } = useAuthContext();
 
     const [Search, setSearch] = useState('');
     const [message, setMessage] = useState('');
@@ -33,6 +36,13 @@ const Home = () => {
     const ImageToSend = useRef(null);
     const { loading, allUsers } = useGetAllUsers();
 
+    const socket = useMemo(() => io('https://vercel-deployment-server-trial.vercel.app', {
+        withcredentials: true,
+        query: {
+            userId: authUser?._id
+        }
+    }), []);
+
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem('chat-app-user'));
         if (!token) {
@@ -41,6 +51,22 @@ const Home = () => {
             setProfile(token.profile);
             setUsername(token.fullname);
             console.log(allUsers);
+
+            socket.on('connect', () => {
+                console.log('Connected to server', socket.id);
+            });
+
+            socket.on('recieve-message', (msg) => {
+                console.log('Message recieved-->', msg);
+                setAllMsg((prevMsgs) => [...prevMsgs, msg]);
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Disconnected from server');
+            });
+        }
+        return () => {
+            console.log("Disconnected from server");
         }
     }, []);
 
