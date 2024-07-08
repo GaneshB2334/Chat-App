@@ -8,6 +8,8 @@ export default defineConfig({
 		proxy: {
 			"/api": {
 				target: "http://vercel-deployment-server-trial.vercel.app",
+				changeOrigin: true,
+				secure: false,
 			},
 		},
 	},
