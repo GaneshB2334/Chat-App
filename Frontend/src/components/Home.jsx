@@ -36,7 +36,7 @@ const Home = () => {
     const ImageToSend = useRef(null);
     const { loading, allUsers } = useGetAllUsers();
 
-    const socket = useMemo(() => io('/', {
+    const socket = useMemo(() => io('https://vercel-deployment-server-trial.vercel.app', {
         withcredentials: true,
         query: {
             userId: authUser?._id

@@ -36,7 +36,9 @@ export default function Register() {
       return;
     }
     const toastId = toast.loading("Loading...")
-    await axios.post('https://vercel-deployment-server-trial.vercel.app/api/auth/register', formdata)
+    await axios.post('https://vercel-deployment-server-trial.vercel.app/api/auth/register', formdata,{
+      withCredentials: true
+    })
       .then((result) => {
         console.log(result.data);
         if (result.data === "AlreadyPresent") {
