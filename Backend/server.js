@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000","https://chat-app-client-phi.vercel.app"],
     credentials: true,
 }));
 app.use(express.json());
