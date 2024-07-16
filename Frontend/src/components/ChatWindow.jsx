@@ -41,7 +41,7 @@ const ChatWindow = ({ HandleSend, isMessageSent, allMsg, setAllMsg, setIsMsgLoad
             return;
         }
         setisTempImgSent(false);
-        await axios.post(`https://chat-app-ku8j.onrender.com/api/messages/send/${currentChat._id}`, { message })
+        await axios.post(`https://chat-app-ku8j.onrender.com/api/messages/send/${currentChat._id}`, { message },{ withCredentials: true })
             .catch(err => { console.log("error in sending message --> ", err) })
             .finally(() => {
                 setMessage("")

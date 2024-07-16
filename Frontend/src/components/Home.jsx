@@ -76,7 +76,7 @@ const Home = () => {
             const results = allUsers.filter((user) => {
                 return user.fullname.toLowerCase().includes(e.target.value.toLowerCase());
             });
-            setSearchResult((prev)=>[...results]);
+            setSearchResult((prev) => [...results]);
             console.log(results);
         }
     }
@@ -88,7 +88,7 @@ const Home = () => {
         setCurrentChat(allUsers[index]);
         setIsMsgLoaded(false);
         (async () => {
-            await axios.get(`https://chat-app-ku8j.onrender.com/api/messages/${allUsers[index]._id}`)
+            await axios.get(`https://chat-app-ku8j.onrender.com/api/messages/${allUsers[index]._id}`, { withCredentials: true })
                 .then(res => {
                     setAllMsg(res.data.messages);
                     console.log(res.data.messages);
@@ -116,7 +116,7 @@ const Home = () => {
         setIsMessageSent(false);
 
 
-        await axios.post(`https://chat-app-ku8j.onrender.com/api/messages/send/${currentChat._id}`, { message })
+        await axios.post(`https://chat-app-ku8j.onrender.com/api/messages/send/${currentChat._id}`, { message }, { withCredentials: true })
             .catch(err => { console.log("error in sending message --> ", err) })
             .finally(() => {
                 setMessage("")
@@ -135,7 +135,7 @@ const Home = () => {
                 <Nav setIsProfileOption={setIsProfileOption} profile={profile} setConfirmState={setConfirmState} username={username} />
                 <div className='flex justify-center'>
 
-                    <UserList currentChat={currentChat} HandleSearch={HandleSearch} LoadCurrentChat={LoadCurrentChat} Search={Search} allUsers={allUsers} loading={loading} searchResult={searchResult}/>
+                    <UserList currentChat={currentChat} HandleSearch={HandleSearch} LoadCurrentChat={LoadCurrentChat} Search={Search} allUsers={allUsers} loading={loading} searchResult={searchResult} />
 
                     <ChatWindow HandleSend={HandleSend} setAllMsg={setAllMsg} isMessageSent={isMessageSent} allMsg={allMsg} setIsMsgLoaded={setIsMsgLoaded} setIsMessageSent={setIsMessageSent} ImageToSend={ImageToSend} currentChat={currentChat} isPickerVisible={isPickerVisible} message={message} setMessage={setMessage} setCurrentChat={setCurrentChat} setIsPickerVisible={setIsPickerVisible} isMsgLoaded={isMsgLoaded} />
 
