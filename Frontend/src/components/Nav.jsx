@@ -12,6 +12,8 @@ const Nav = ({ setIsProfileOption, setConfirmState, profile, username }) => {
                         width: "4rem"
                     }} src={profile ? profile : null} />
                 </Tooltip>
+            </div>
+            <div className='flex-grow overflow-hidden overflow-ellipsis'>
                 <Tooltip title={username}>
                     <h1 className='max-md:text-2xl text-nowrap overflow-hidden text-ellipsis'>{username}</h1>
                 </Tooltip>
