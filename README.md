@@ -2,6 +2,12 @@
 
 This is a real-time chatting application built using the MERN stack (MongoDB, Express.js, React, Node.js).
 
+
+## Live here
+
+Check out the live demo of the app: [My Chat App](https://chat-app-client-phi.vercel.app/)
+
+
 ## Features
 
 - Real-time messaging
@@ -83,4 +89,5 @@ This is a real-time chatting application built using the MERN stack (MongoDB, Ex
 ## Deployment
 
 - **Backend**: Deploy your Node.js backend on a platform like Render, Heroku, or AWS.
-- **Frontend**: Deploy your Vite frontend on Vercel, Netlify, or any static hosting provider.
+
+
