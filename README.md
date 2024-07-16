@@ -89,5 +89,6 @@ Check out the live demo of the app: [My Chat App](https://chat-app-client-phi.ve
 ## Deployment
 
 - **Backend**: Deploy your Node.js backend on a platform like Render, Heroku, or AWS.
+- **Frontend**: Deploy your Vite frontend on Vercel, Netlify, or any static hosting provider.
 
 
