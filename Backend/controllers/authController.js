@@ -66,6 +66,7 @@ export const logoutUser = async (req, res) => {
         }
         console.log('JWT token:', token);
         res.clearCookie('jwt');
+        localStorage.removeItem('jwt');
         
         console.log('JWT cookie cleared');
         res.status(200).json({ message: 'Logged out successfully' });

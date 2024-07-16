@@ -3,7 +3,9 @@ import User from '../models/User.js';
 
 const protectRoute = async (req, res, next) => {
     try {
-        const token = await req.cookies.jwt;
+        let token = await req.cookies.jwt;
+        
+        token = token || localStorage.getItem('jwt');
 
         if (!token) {
             return res.status(401).json({ message: 'Not authorized, no token' });
