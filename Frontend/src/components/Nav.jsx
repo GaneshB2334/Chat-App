@@ -13,7 +13,7 @@ const Nav = ({ setIsProfileOption, setConfirmState, profile, username }) => {
                     }} src={profile ? profile : null} />
                 </Tooltip>
             </div>
-            <div className='flex-grow overflow-hidden overflow-ellipsis'>
+            <div className='flex-grow overflow-hidden overflow-ellipsis text-white'>
                 <Tooltip title={username}>
                     <h1 className='max-md:text-2xl text-nowrap overflow-hidden text-ellipsis'>{username}</h1>
                 </Tooltip>
