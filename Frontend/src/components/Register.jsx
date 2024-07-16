@@ -31,7 +31,7 @@ export default function Register() {
       toast.error('Passwords do not match');
       return;
     }
-    if (!formdata.username || !formdata.password || !formdata.fullname || !formdata.profile) {
+    if (!formdata.username || !formdata.password || !formdata.fullname ) {
       toast.error('Please fill all the fields');
       return;
     }
