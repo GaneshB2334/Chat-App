@@ -8,9 +8,8 @@ const generateToken = (userId, res) => {
         httpOnly: true,
         maxAge: 15 * 24 * 60 * 60 * 1000,
         sameSite: 'None',
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
     });
-    localStorage.setItem('jwt', token);
 }
 
 export default generateToken;
