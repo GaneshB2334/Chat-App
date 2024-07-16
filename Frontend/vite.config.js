@@ -9,7 +9,7 @@ export default defineConfig({
 			"/api": {
 				target: "https://chat-app-ku8j.onrender.com",
 				changeOrigin: true,
-				secure: false,
+				secure: true,
 			},
 		},
 	},
