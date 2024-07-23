@@ -34,7 +34,6 @@ export const getMessages = async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.user._id;
-        console.log('User fetched in getMessages:', req.user);
         const conversation = await Conversation.findOne({ members: { $all: [id, userId] } }).populate('messages');
 
         if (!conversation) return res.status(200).json({ messages: [] });

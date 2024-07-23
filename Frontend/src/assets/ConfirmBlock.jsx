@@ -20,7 +20,7 @@ const ConfirmBlock = ({ setConfirmState, header }) => {
             <div className='h-[30%] w-[40%] max-md:w-[85%] max-md:h-[25%] bg-[#241d50] rounded-xl flex flex-col justify-evenly items-center '>
                 <p className='text-white font-semibold text-2xl '>{header}</p>
                 <div className='w-full flex justify-evenly'>
-                    <Button variant='contained' onClick={() => { setConfirmState(false) }}>Cancle</Button>
+                    <Button variant='contained' onClick={() => { setConfirmState(false) }}>Cancel</Button>
                     <Button variant='outlined' onClick={HandleLogout}>Confirm</Button>
                 </div>
             </div>
