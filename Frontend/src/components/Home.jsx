@@ -62,9 +62,7 @@ const Home = () => {
 
       socket.on("recieve-message", (msg) => {
         console.log("Message recieved-->", msg);
-        if (currentChat?._id===msg?.senderId) {
-            setAllMsg((prevMsgs) => [...prevMsgs, msg]);
-        }
+        setAllMsg((prevMsgs) => [...prevMsgs, msg]);
       });
 
       socket.on("disconnect", () => {
