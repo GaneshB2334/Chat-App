@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmBlock from "../assets/ConfirmBlock.jsx";
 import LargeView from "../assets/LargeView.jsx";
@@ -95,7 +95,10 @@ const Home = () => {
     setIsMsgLoaded(false);
     (async () => {
       await axios
-        .get(`https://chat-app-ku8j.onrender.com/api/messages/${allUsers[index]._id}`, { withCredentials: true })
+        .get(
+          `https://chat-app-ku8j.onrender.com/api/messages/${allUsers[index]._id}`,
+          { withCredentials: true }
+        )
         .then((res) => {
           setAllMsg(res.data.messages);
           console.log(res.data.messages);
@@ -147,61 +150,63 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex flex-col">
-        <Nav
-          setIsProfileOption={setIsProfileOption}
-          profile={profile}
-          setConfirmState={setConfirmState}
-          username={username}
-        />
-        <div className="flex justify-center">
-          <UserList
-            currentChat={currentChat}
-            HandleSearch={HandleSearch}
-            LoadCurrentChat={LoadCurrentChat}
-            Search={Search}
-            allUsers={allUsers}
-            loading={loading}
-            searchResult={searchResult}
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="flex flex-col">
+          <Nav
+            setIsProfileOption={setIsProfileOption}
+            profile={profile}
+            setConfirmState={setConfirmState}
+            username={username}
           />
+          <div className="flex justify-center">
+            <UserList
+              currentChat={currentChat}
+              HandleSearch={HandleSearch}
+              LoadCurrentChat={LoadCurrentChat}
+              Search={Search}
+              allUsers={allUsers}
+              loading={loading}
+              searchResult={searchResult}
+            />
 
-          <ChatWindow
-            HandleSend={HandleSend}
-            setAllMsg={setAllMsg}
-            isMessageSent={isMessageSent}
-            allMsg={allMsg}
-            setIsMsgLoaded={setIsMsgLoaded}
-            setIsMessageSent={setIsMessageSent}
-            ImageToSend={ImageToSend}
-            currentChat={currentChat}
-            isPickerVisible={isPickerVisible}
-            message={message}
-            setMessage={setMessage}
-            setCurrentChat={setCurrentChat}
-            setIsPickerVisible={setIsPickerVisible}
-            isMsgLoaded={isMsgLoaded}
-          />
+            <ChatWindow
+              HandleSend={HandleSend}
+              setAllMsg={setAllMsg}
+              isMessageSent={isMessageSent}
+              allMsg={allMsg}
+              setIsMsgLoaded={setIsMsgLoaded}
+              setIsMessageSent={setIsMessageSent}
+              ImageToSend={ImageToSend}
+              currentChat={currentChat}
+              isPickerVisible={isPickerVisible}
+              message={message}
+              setMessage={setMessage}
+              setCurrentChat={setCurrentChat}
+              setIsPickerVisible={setIsPickerVisible}
+              isMsgLoaded={isMsgLoaded}
+            />
+          </div>
         </div>
-      </div>
-      {ConfirmState && (
-        <ConfirmBlock
-          setConfirmState={setConfirmState}
-          header="Do you Want to Logout ?"
-        />
-      )}
-      {isLargeView && (
-        <LargeView setIsLargeView={setIsLargeView} profile={profile} />
-      )}
-      {isProfileOption && (
-        <Settings
-          setIsProfileOption={setIsProfileOption}
-          setIsLargeView={setIsLargeView}
-          HandleProfileChange={HandleProfileChange}
-          HandleProfileRemove={HandleProfileRemove}
-          setProfile={setProfile}
-          profile={profile}
-        />
-      )}
+        {ConfirmState && (
+          <ConfirmBlock
+            setConfirmState={setConfirmState}
+            header="Do you Want to Logout ?"
+          />
+        )}
+        {isLargeView && (
+          <LargeView setIsLargeView={setIsLargeView} profile={profile} />
+        )}
+        {isProfileOption && (
+          <Settings
+            setIsProfileOption={setIsProfileOption}
+            setIsLargeView={setIsLargeView}
+            HandleProfileChange={HandleProfileChange}
+            HandleProfileRemove={HandleProfileRemove}
+            setProfile={setProfile}
+            profile={profile}
+          />
+        )}
+      </Suspense>
     </>
   );
 };
