@@ -28,7 +28,7 @@ const Message = ({ getFormattedDate, currentChat, msg }) => {
                     :
                     <div className={`relative p-3 rounded-xl min-w-[100px] max-w-[49%] ${
                         currentChat._id !== msg.receiverId 
-                            ? "rounded-bl-none bg-lite text-darkest" 
+                            ? "rounded-bl-none bg-liter text-darkest" 
                             : "rounded-br-none bg-accent text-litest"
                         }`}>
                         {msg.message}

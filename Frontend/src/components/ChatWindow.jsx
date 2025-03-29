@@ -1,4 +1,3 @@
-
 import { AttachFile, Close, EmojiEmotions, Send } from "@mui/icons-material";
 import { Avatar, IconButton, Tooltip } from "@mui/material";
 import EmojiPicker from "emoji-picker-react";
@@ -41,7 +40,7 @@ const ChatWindow = ({
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(today.getDate() - 1);
-    
+
     if (messageDate.toDateString() === today.toDateString()) {
       return "Today";
     } else if (messageDate.toDateString() === yesterday.toDateString()) {
@@ -50,29 +49,29 @@ const ChatWindow = ({
       return messageDate.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
-        day: "numeric"
+        day: "numeric",
       });
     }
   };
 
   const organizeMessagesByDate = () => {
     if (allMsg.length === 0) return [];
-    
+
     const result = [];
     let currentDate = null;
-    
+
     for (const msg of allMsg) {
       const messageDate = new Date(msg.createdAt);
       const dateLabel = getDateLabel(messageDate);
-      
+
       if (dateLabel !== currentDate) {
         currentDate = dateLabel;
         result.push({ type: "divider", date: currentDate });
       }
-      
+
       result.push({ type: "message", data: msg });
     }
-    
+
     return result;
   };
 
@@ -128,46 +127,22 @@ const ChatWindow = ({
   const organizedMessages = organizeMessagesByDate();
 
   const ChatSkeleton = () => (
-    <div className="w-full h-full p-4 space-y-6">
-      {/* Right-aligned message skeletons */}
-      <div className="flex justify-end mb-8">
-        <div className="max-w-[60%]">
-          <Skeleton className="h-24 w-64 rounded-xl rounded-br-none" />
-          <div className="flex justify-end mt-1">
-            <Skeleton className="h-3 w-16" />
+    <div className="w-full h-full p-4 space-y-2 flex flex-col justify-end">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div
+          key={index}
+          className={`flex items-center gap-2 ${
+            index % 2 === 0 ? "justify-start" : "justify-end"
+          }`}
+        >
+          <div className="relative p-3 rounded-xl w-1/3">
+            <Skeleton className="shadow-xl bg-gray-500 w-full rounded-lg p-5" />
+            <div className={`w-10 mt-1 ${index % 2 === 0 ? "" : "float-right"}`}>
+              <Skeleton className="shadow-xl bg-gray-500/60 w-16 h-10 rounded-lg" />
+            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Left-aligned message skeletons */}
-      <div className="flex justify-start mb-8">
-        <div className="max-w-[60%]">
-          <Skeleton className="h-16 w-56 rounded-xl rounded-bl-none" />
-          <div className="flex justify-start mt-1">
-            <Skeleton className="h-3 w-16" />
-          </div>
-        </div>
-      </div>
-      
-      {/* Right-aligned message skeletons */}
-      <div className="flex justify-end mb-8">
-        <div className="max-w-[60%]">
-          <Skeleton className="h-32 w-72 rounded-xl rounded-br-none" />
-          <div className="flex justify-end mt-1">
-            <Skeleton className="h-3 w-16" />
-          </div>
-        </div>
-      </div>
-      
-      {/* Image message skeleton */}
-      <div className="flex justify-start mb-8">
-        <div>
-          <Skeleton className="h-52 w-52 rounded-xl" />
-          <div className="flex justify-start mt-1">
-            <Skeleton className="h-3 w-16" />
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 
@@ -190,9 +165,9 @@ const ChatWindow = ({
           </>
         ) : (
           <>
-            <Skeleton className="w-12 h-12 rounded-full" />
+            <Skeleton className="shadow-xl bg-gray-300 w-12 h-12 rounded-full" />
             <p className="flex-grow text-center text-2xl text-litest">
-              <Skeleton className="w-1/3 h-8 mx-auto" />
+              <Skeleton className="shadow-xl bg-gray-300 w-1/3 h-8 mx-auto" />
             </p>
           </>
         )}
@@ -211,8 +186,12 @@ const ChatWindow = ({
         {isMsgLoaded === null ? (
           <div className="text-black w-full h-full content-center text-center text-6xl flex items-center justify-center">
             <div className="glass-card p-8 flex flex-col items-center gap-4 shadow-xl animate-scale-in">
-              <p className="text-darkest text-2xl font-medium">Let's start the chat!</p>
-              <p className="text-darker text-lg">Select a contact to begin messaging</p>
+              <p className="text-darkest text-2xl font-medium">
+                Let's start the chat!
+              </p>
+              <p className="text-darker text-lg">
+                Select a contact to begin messaging
+              </p>
             </div>
           </div>
         ) : (
@@ -231,7 +210,9 @@ const ChatWindow = ({
                   ) : (
                     organizedMessages.map((item, index) => {
                       if (item.type === "divider") {
-                        return <DateDivider key={`date-${index}`} date={item.date} />;
+                        return (
+                          <DateDivider key={`date-${index}`} date={item.date} />
+                        );
                       } else {
                         return (
                           <Message
@@ -256,7 +237,11 @@ const ChatWindow = ({
         <div className="relative bg-darkest/80 p-4 backdrop-blur object-contain">
           <div className="w-full max-h-full flex justify-center">
             <div className="relative rounded-xl overflow-hidden border-2 border-accent/70 shadow-lg">
-              <img className="h-[200px] w-[200px] object-cover" src={message} alt="tempImg" />
+              <img
+                className="h-[200px] w-[200px] object-cover"
+                src={message}
+                alt="tempImg"
+              />
             </div>
           </div>
           <IconButton
@@ -344,7 +329,7 @@ const ChatWindow = ({
             placeholder="Send Message..."
           />
           <Tooltip title="Send">
-            <IconButton 
+            <IconButton
               onClick={HandleSend}
               className="bg-accent/80 hover:bg-accent text-white transition-colors"
             >
