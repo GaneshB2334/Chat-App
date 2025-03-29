@@ -1,3 +1,4 @@
+
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmBlock from "../assets/ConfirmBlock.jsx";
@@ -11,7 +12,7 @@ import useGetAllUsers from "../hooks/useGetAllUsers.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { useAuthContext } from "../context/AuthContext.jsx";
-import CustomLoader from "./CustomLoader.jsx";
+import Skeleton from "./Skeleton.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -153,9 +154,14 @@ const Home = () => {
     <>
       <Suspense fallback={
         <div className="w-screen h-screen flex items-center justify-center bg-darkest">
-          <div className="flex flex-col items-center gap-4">
-            <CustomLoader size="xl" color="accent" />
-            <p className="text-litest text-xl animate-pulse">Loading ChimeChat...</p>
+          <div className="flex flex-col items-center gap-4 w-full max-w-md p-6">
+            <div className="w-full flex items-center justify-center mb-4">
+              <Skeleton className="w-24 h-24 rounded-full" />
+            </div>
+            <Skeleton className="w-3/4 h-10" />
+            <Skeleton className="w-full h-14" />
+            <Skeleton className="w-full h-14" />
+            <Skeleton className="w-2/3 h-10" />
           </div>
         </div>
       }>

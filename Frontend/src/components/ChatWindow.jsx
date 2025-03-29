@@ -1,10 +1,11 @@
+
 import { AttachFile, Close, EmojiEmotions, Send } from "@mui/icons-material";
 import { Avatar, IconButton, Tooltip } from "@mui/material";
 import EmojiPicker from "emoji-picker-react";
 import React, { useEffect, useRef, useState } from "react";
 import Message from "../assets/Message";
 import DateDivider from "../assets/DateDivider";
-import CustomLoader from "./CustomLoader";
+import Skeleton from "./Skeleton";
 import axios from "axios";
 
 const ChatWindow = ({
@@ -126,6 +127,50 @@ const ChatWindow = ({
 
   const organizedMessages = organizeMessagesByDate();
 
+  const ChatSkeleton = () => (
+    <div className="w-full h-full p-4 space-y-6">
+      {/* Right-aligned message skeletons */}
+      <div className="flex justify-end mb-8">
+        <div className="max-w-[60%]">
+          <Skeleton className="h-24 w-64 rounded-xl rounded-br-none" />
+          <div className="flex justify-end mt-1">
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Left-aligned message skeletons */}
+      <div className="flex justify-start mb-8">
+        <div className="max-w-[60%]">
+          <Skeleton className="h-16 w-56 rounded-xl rounded-bl-none" />
+          <div className="flex justify-start mt-1">
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Right-aligned message skeletons */}
+      <div className="flex justify-end mb-8">
+        <div className="max-w-[60%]">
+          <Skeleton className="h-32 w-72 rounded-xl rounded-br-none" />
+          <div className="flex justify-end mt-1">
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Image message skeleton */}
+      <div className="flex justify-start mb-8">
+        <div>
+          <Skeleton className="h-52 w-52 rounded-xl" />
+          <div className="flex justify-start mt-1">
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div
       className={`flex flex-col h-[85vh] bg-darkest p-0 w-[65%] max-xl:w-[55%] max-lg:w-[60%] ${
@@ -133,13 +178,24 @@ const ChatWindow = ({
       } border-l-2 border-black`}
     >
       <div className="flex items-center px-5 py-3 h-[70px] content-center text-litest">
-        <Avatar
-          sx={{ height: "50px", width: "50px" }}
-          src={currentChat ? currentChat.profile : null}
-        />
-        <p className="flex-grow text-center text-2xl text-litest">
-          {currentChat ? currentChat.fullname : "Username"}
-        </p>
+        {currentChat ? (
+          <>
+            <Avatar
+              sx={{ height: "50px", width: "50px" }}
+              src={currentChat.profile}
+            />
+            <p className="flex-grow text-center text-2xl text-litest">
+              {currentChat.fullname}
+            </p>
+          </>
+        ) : (
+          <>
+            <Skeleton className="w-12 h-12 rounded-full" />
+            <p className="flex-grow text-center text-2xl text-litest">
+              <Skeleton className="w-1/3 h-8 mx-auto" />
+            </p>
+          </>
+        )}
         <Tooltip title="Close Chat">
           <IconButton
             onClick={() => {
@@ -162,12 +218,7 @@ const ChatWindow = ({
         ) : (
           <>
             {!isMsgLoaded ? (
-              <div className="w-full h-full flex flex-col justify-center items-center bg-lite/90">
-                <CustomLoader size="xl" color="dark" />
-                <p className="font-bold text-3xl mt-4 text-center text-darkest font-sans animate-pulse">
-                  Loading Your Messages
-                </p>
-              </div>
+              <ChatSkeleton />
             ) : (
               <div className="w-full h-full p-2 overflow-scroll">
                 <div className="flex flex-col gap-5">
