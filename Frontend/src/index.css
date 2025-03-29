@@ -1,8 +1,9 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   scrollbar-width: none;
   padding: 0;
   margin: 0;
@@ -11,8 +12,41 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #192427;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
   width: 0px;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-darker hover:bg-darkest text-white font-semibold py-2 px-4 rounded-md transition-all duration-300 shadow-md hover:shadow-lg;
+  }
+  
+  .input-primary {
+    @apply bg-litest/10 text-litest border border-lite/20 p-3 rounded-xl outline-none w-full focus:ring-2 focus:ring-liter transition-all;
+  }
+  
+  .glass-card {
+    @apply bg-darkest/80 backdrop-blur-sm border border-lite/10 rounded-xl shadow-xl;
+  }
+  
+  .chat-bubble {
+    @apply p-3 rounded-xl max-w-[80%] shadow-md;
+  }
+  
+  .chat-bubble-sender {
+    @apply chat-bubble bg-darker text-litest ml-auto;
+  }
+  
+  .chat-bubble-receiver {
+    @apply chat-bubble bg-lite text-darkest mr-auto;
+  }
+  
+  .app-container {
+    @apply max-w-7xl mx-auto h-screen overflow-hidden;
+  }
 }
