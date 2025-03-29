@@ -74,7 +74,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen items-center justify-center bg-darkest">
+    <div className="flex flex-col h-screen items-center justify-center bg-darkest">
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-darker/20 to-transparent opacity-50"></div>
       
       <div className="z-10 flex flex-col items-center">

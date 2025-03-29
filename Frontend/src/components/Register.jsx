@@ -37,7 +37,7 @@ export default function Register() {
       toast.error("Please fill all the fields");
       return;
     }
-    
+
     setIsLoading(true);
     const toastId = toast.loading("Creating your account...");
     await axios
@@ -72,7 +72,7 @@ export default function Register() {
   const HandleProfile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     if (file.size > 2e6) {
       toast.error("File size should be less than 2MB");
       return;
@@ -107,19 +107,19 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-screen items-center justify-center bg-darkest">
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-darker/20 to-transparent opacity-50"></div>
-      
-      <div className="z-10 flex flex-col items-center">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-darkest overflow-auto">
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-darker/20 to-transparent opacity-50 pointer-events-none"></div>
+
+      <div className="z-10 flex flex-col items-center justify-center overflow-auto max-h-screen w-full">
         <h1 className="text-accent text-6xl font-bold mb-6 [text-shadow:_4px_4px_10px_rgb(0_0_0_/_40%)]">
           ChimeChat
         </h1>
-        
-        <div className="glass-card p-6 w-full max-w-md">
+
+        <div className="glass-card p-6 max-h-screen overflow-y-auto">
           <h1 className="w-full text-center text-4xl my-4 font-bold text-litest">
             Register
           </h1>
-          
+
           <form className="space-y-4">
             <div className="flex w-full justify-center mb-4">
               <div className="relative group">
@@ -150,9 +150,11 @@ export default function Register() {
                 </div>
               </div>
             </div>
-            
+
             <div className="text-xl flex flex-col gap-2">
-              <label htmlFor="fullname" className="text-litest">Full Name</label>
+              <label htmlFor="fullname" className="text-litest">
+                Full Name
+              </label>
               {isLoading ? (
                 <Skeleton className="h-12 w-full rounded-xl" />
               ) : (
@@ -169,9 +171,11 @@ export default function Register() {
                 />
               )}
             </div>
-            
+
             <div className="text-xl flex flex-col gap-2">
-              <label htmlFor="username" className="text-litest">Username</label>
+              <label htmlFor="username" className="text-litest">
+                Username
+              </label>
               {isLoading ? (
                 <Skeleton className="h-12 w-full rounded-xl" />
               ) : (
@@ -187,9 +191,11 @@ export default function Register() {
                 />
               )}
             </div>
-            
+
             <div className="text-xl flex flex-col gap-2">
-              <label htmlFor="password" className="text-litest">Password</label>
+              <label htmlFor="password" className="text-litest">
+                Password
+              </label>
               {isLoading ? (
                 <Skeleton className="h-12 w-full rounded-xl" />
               ) : (
@@ -212,15 +218,21 @@ export default function Register() {
                       }}
                       disabled={isLoading}
                     >
-                      {isPasswordVisible ? <RemoveRedEye className="text-litest" /> : <VisibilityOff className="text-litest" />}
+                      {isPasswordVisible ? (
+                        <RemoveRedEye className="text-litest" />
+                      ) : (
+                        <VisibilityOff className="text-litest" />
+                      )}
                     </IconButton>
                   </div>
                 </div>
               )}
             </div>
-            
+
             <div className="text-xl flex flex-col gap-2">
-              <label htmlFor="cnfPassword" className="text-litest">Confirm Password</label>
+              <label htmlFor="cnfPassword" className="text-litest">
+                Confirm Password
+              </label>
               {isLoading ? (
                 <Skeleton className="h-12 w-full rounded-xl" />
               ) : (
@@ -237,13 +249,17 @@ export default function Register() {
                   />
                   <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
                     <IconButton
-                      className="text-litest" 
+                      className="text-litest"
                       onClick={() => {
                         setIsCnfPasswordVisible(!isCnfPasswordVisible);
                       }}
                       disabled={isLoading}
                     >
-                      {isCnfPasswordVisible ? <RemoveRedEye className="text-litest" /> : <VisibilityOff className="text-litest" />}
+                      {isCnfPasswordVisible ? (
+                        <RemoveRedEye className="text-litest" />
+                      ) : (
+                        <VisibilityOff className="text-litest" />
+                      )}
                     </IconButton>
                   </div>
                 </div>
@@ -258,9 +274,12 @@ export default function Register() {
             >
               <ButtonContent />
             </button>
-            
+
             <div className="text-center">
-              <Link to="/" className="text-litest hover:text-white underline transition-colors">
+              <Link
+                to="/"
+                className="text-litest hover:text-white underline transition-colors"
+              >
                 Already have an account? Login
               </Link>
             </div>
