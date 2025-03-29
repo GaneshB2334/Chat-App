@@ -1,3 +1,4 @@
+
 import React from 'react'
 
 const Message = ({ getFormattedDate, currentChat, msg }) => {
@@ -8,19 +9,34 @@ const Message = ({ getFormattedDate, currentChat, msg }) => {
         <div className={`flex ${currentChat._id !== msg.receiverId ? "justify-start" : "justify-end"} text-black font-sans font-semibold relative`}>
             {
                 ifPrefixMatch(msg.message, "data:image") ?
-                    <div className={` flex`}>
-                        <img className={`rounded-xl border-2 ${currentChat._id !== msg.receiverId ? " border-gray-950" : " border-gray-500"}`} src={msg.message} />
-                        <div className={`absolute bottom-[-15px] ${currentChat._id !== msg.receiverId ? "left-0" : "right-0"} `}>
-                            <p className='text-xs'>{getFormattedDate(msg.createdAt)}</p>
+                    <div className={`flex`}>
+                        <div className="relative max-w-[240px]">
+                            <img 
+                                className={`rounded-xl border-2 object-cover max-h-[240px] w-auto ${
+                                    currentChat._id !== msg.receiverId 
+                                        ? "border-darker" 
+                                        : "border-accent"
+                                }`} 
+                                src={msg.message} 
+                                alt="Chat image"
+                            />
+                            <div className={`absolute bottom-[-15px] ${currentChat._id !== msg.receiverId ? "left-0" : "right-0"} text-litest`}>
+                                <p className='text-xs'>{getFormattedDate(msg.createdAt)}</p>
+                            </div>
                         </div>
                     </div>
                     :
-                    <div className={`relative p-2 rounded-xl min-w-[100px] max-w-[49%] ${currentChat._id !== msg.receiverId ? "rounded-bl-none bg-[#646494] " : "rounded-br-none bg-blue-600 "} `}>
+                    <div className={`relative p-3 rounded-xl min-w-[100px] max-w-[49%] ${
+                        currentChat._id !== msg.receiverId 
+                            ? "rounded-bl-none bg-lite text-darkest" 
+                            : "rounded-br-none bg-accent text-litest"
+                        }`}>
                         {msg.message}
-                        <div className={`absolute bottom-[-15px] ${currentChat._id !== msg.receiverId ? "left-0" : "right-0"} `}>
+                        <div className={`absolute bottom-[-15px] ${currentChat._id !== msg.receiverId ? "left-0" : "right-0"} text-litest`}>
                             <p className='text-xs'>{getFormattedDate(msg.createdAt)}</p>
                         </div>
-                    </div>}
+                    </div>
+            }
         </div>
     )
 }

@@ -1,3 +1,4 @@
+
 import { Close, Delete, Edit, Person } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import axios from "axios";
@@ -49,52 +50,56 @@ const Settings = ({
   };
 
   return (
-    <div className="flex items-center justify-center h-[100vh] w-[100vw] bg-[rgba(0,0,0,.7)] fixed top-0 left-0 ">
-      <div className="h-[30%] w-[40%] max-md:w-[85%] max-md:h-[25%] bg-darkest rounded-xl flex flex-col justify-evenly items-center ">
-        <div className="w-full flex flex-col gap-3 justify-evenly p-3 text-black font-bold font-sans relative">
-          <IconButton
-            sx={{
-              position: "absolute",
-              top: "5px",
-              right: "5px",
-            }}
-            onClick={() => setIsProfileOption(false)}
-          >
-            <Close />
-          </IconButton>
-          <button
-            className="w-full text-center bg-darker py-3 rounded-xl flex gap-5 justify-center"
-            onClick={() => {
-              setIsProfileOption(false);
-              setIsLargeView(true);
-            }}
-          >
-            View Profile
-            <Person />
-          </button>
-          <div className="w-full">
-            <button
-              className="w-full text-center bg-darker py-3 rounded-xl flex justify-center gap-5"
-              onClick={() => inputImage.current.click()}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-darkest/80 backdrop-blur-sm transition-all">
+      <div className="w-[450px] max-w-[90%] bg-darker rounded-xl shadow-custom-lg border border-lite/20 transform transition-all duration-200 animate-fade-in">
+        <div className="p-5 relative">
+          <div className="flex justify-between items-center mb-5 pb-2 border-b border-lite/20">
+            <h2 className="text-xl font-bold text-litest">Profile Options</h2>
+            <IconButton
+              className="text-litest hover:text-accent transition-colors"
+              onClick={() => setIsProfileOption(false)}
             >
-              Change Profile
-              <Edit />
-            </button>
-            <input
-              ref={inputImage}
-              style={{ display: "none" }}
-              type="file"
-              accept="image/*"
-              onChange={handleProfile}
-            />
+              <Close className="text-litest hover:text-accent" />
+            </IconButton>
           </div>
-          <button
-            className="w-full text-center bg-darker py-3 rounded-xl flex justify-center gap-5"
-            onClick={HandleProfileRemove}
-          >
-            Remove Profile
-            <Delete />
-          </button>
+          
+          <div className="flex flex-col gap-3">
+            <button
+              className="w-full text-center bg-darkest hover:bg-black/50 text-litest py-3 px-4 rounded-xl flex items-center gap-3 justify-center transition-all duration-200"
+              onClick={() => {
+                setIsProfileOption(false);
+                setIsLargeView(true);
+              }}
+            >
+              <Person className="text-lite" />
+              <span>View Profile</span>
+            </button>
+            
+            <div className="w-full">
+              <button
+                className="w-full text-center bg-darkest hover:bg-black/50 text-litest py-3 px-4 rounded-xl flex items-center gap-3 justify-center transition-all duration-200"
+                onClick={() => inputImage.current.click()}
+              >
+                <Edit className="text-lite" />
+                <span>Change Profile</span>
+              </button>
+              <input
+                ref={inputImage}
+                style={{ display: "none" }}
+                type="file"
+                accept="image/*"
+                onChange={handleProfile}
+              />
+            </div>
+            
+            <button
+              className="w-full text-center bg-darkest hover:bg-black/50 text-litest py-3 px-4 rounded-xl flex items-center gap-3 justify-center transition-all duration-200"
+              onClick={HandleProfileRemove}
+            >
+              <Delete className="text-accent" />
+              <span>Remove Profile</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
