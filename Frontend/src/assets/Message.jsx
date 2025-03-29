@@ -12,7 +12,7 @@ const Message = ({ getFormattedDate, currentChat, msg }) => {
                     <div className={`flex`}>
                         <div className="relative max-w-[240px]">
                             <img 
-                                className={`rounded-xl border-2 object-cover max-h-[240px] w-auto ${
+                                className={`rounded-xl border-2 object-cover h-[200px] w-[200px] ${
                                     currentChat._id !== msg.receiverId 
                                         ? "border-darker" 
                                         : "border-accent"

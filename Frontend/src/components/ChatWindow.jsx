@@ -3,6 +3,7 @@ import { Avatar, CircularProgress, IconButton, Tooltip } from "@mui/material";
 import EmojiPicker from "emoji-picker-react";
 import React, { useEffect, useRef, useState } from "react";
 import Message from "../assets/Message";
+import DateDivider from "../assets/DateDivider";
 import axios from "axios";
 
 const ChatWindow = ({
@@ -31,6 +32,46 @@ const ChatWindow = ({
       minute: "numeric",
       hour12: true,
     });
+  };
+
+  const getDateLabel = (dateString) => {
+    const messageDate = new Date(dateString);
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    
+    if (messageDate.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (messageDate.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    } else {
+      return messageDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
+    }
+  };
+
+  const organizeMessagesByDate = () => {
+    if (allMsg.length === 0) return [];
+    
+    const result = [];
+    let currentDate = null;
+    
+    for (const msg of allMsg) {
+      const messageDate = new Date(msg.createdAt);
+      const dateLabel = getDateLabel(messageDate);
+      
+      if (dateLabel !== currentDate) {
+        currentDate = dateLabel;
+        result.push({ type: "divider", date: currentDate });
+      }
+      
+      result.push({ type: "message", data: msg });
+    }
+    
+    return result;
   };
 
   useEffect(() => {
@@ -82,6 +123,8 @@ const ChatWindow = ({
     ]);
   };
 
+  const organizedMessages = organizeMessagesByDate();
+
   return (
     <div
       className={`flex flex-col h-[85vh] bg-darkest p-0 w-[65%] max-xl:w-[55%] max-lg:w-[60%] ${
@@ -129,15 +172,19 @@ const ChatWindow = ({
                       Send a message to start conversation!
                     </div>
                   ) : (
-                    allMsg.map((msg, index) => {
-                      return (
-                        <Message
-                          key={index}
-                          getFormattedDate={getFormattedDate}
-                          currentChat={currentChat}
-                          msg={msg}
-                        />
-                      );
+                    organizedMessages.map((item, index) => {
+                      if (item.type === "divider") {
+                        return <DateDivider key={`date-${index}`} date={item.date} />;
+                      } else {
+                        return (
+                          <Message
+                            key={`msg-${index}`}
+                            getFormattedDate={getFormattedDate}
+                            currentChat={currentChat}
+                            msg={item.data}
+                          />
+                        );
+                      }
                     })
                   )}
                   <div ref={messageEndRef} />
@@ -151,7 +198,7 @@ const ChatWindow = ({
       {tempImg ? (
         <div className="relative bg-[rgba(0,0,0.2)] p-2 object-contain">
           <div className="w-full max-h-full flex justify-center ">
-            <img className="" src={message} alt="tempImg" />
+            <img className="h-[200px] w-[200px] object-cover rounded-xl" src={message} alt="tempImg" />
           </div>
           <IconButton
             sx={{
