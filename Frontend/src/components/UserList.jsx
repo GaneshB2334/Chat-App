@@ -1,8 +1,9 @@
 
-import { Box, Skeleton, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import User from "./User";
 import { Search as SearchIcon } from "@mui/icons-material";
+import CustomLoader from "./CustomLoader";
 
 const UserList = ({
   Search,
@@ -69,27 +70,9 @@ const UserList = ({
             })
           )
         ) : (
-          <div className="w-full h-full flex flex-col items-center gap-5 justify-center text-litest p-4">
-            {Array(6).fill(0).map((_, index) => (
-              <Stack
-                key={index}
-                px={2}
-                spacing={2}
-                width={"100%"}
-                direction="row"
-                alignItems="center"
-              >
-                <Skeleton variant="circular" width={60} height={60} className="bg-lite/20" />
-                <Box width={"60%"}>
-                  <Typography width={"100%"} variant="h6">
-                    <Skeleton width="100%" className="bg-lite/20" />
-                  </Typography>
-                  <Typography variant="body2">
-                    <Skeleton width="40%" className="bg-lite/20" />
-                  </Typography>
-                </Box>
-              </Stack>
-            ))}
+          <div className="w-full h-full flex flex-col items-center gap-6 justify-center text-litest p-4">
+            <CustomLoader size="xl" color="accent" />
+            <p className="text-lite text-lg animate-pulse">Loading users...</p>
           </div>
         )}
       </div>

@@ -1,9 +1,10 @@
 import { AttachFile, Close, EmojiEmotions, Send } from "@mui/icons-material";
-import { Avatar, CircularProgress, IconButton, Tooltip } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import EmojiPicker from "emoji-picker-react";
 import React, { useEffect, useRef, useState } from "react";
 import Message from "../assets/Message";
 import DateDivider from "../assets/DateDivider";
+import CustomLoader from "./CustomLoader";
 import axios from "axios";
 
 const ChatWindow = ({
@@ -152,15 +153,18 @@ const ChatWindow = ({
       </div>
       <div className="w-full m-0 overflow-y-scroll flex-grow bg-lite ">
         {isMsgLoaded === null ? (
-          <div className="text-black w-full h-full content-center text-center text-6xl ">
-            Let's start the chat!
+          <div className="text-black w-full h-full content-center text-center text-6xl flex items-center justify-center">
+            <div className="glass-card p-8 flex flex-col items-center gap-4 shadow-xl animate-scale-in">
+              <p className="text-darkest text-2xl font-medium">Let's start the chat!</p>
+              <p className="text-darker text-lg">Select a contact to begin messaging</p>
+            </div>
           </div>
         ) : (
           <>
             {!isMsgLoaded ? (
-              <div className="w-full h-full flex flex-col justify-center items-center">
-                <CircularProgress />
-                <p className="font-bold text-3xl w-full text-center text-black font-sans">
+              <div className="w-full h-full flex flex-col justify-center items-center bg-lite/90">
+                <CustomLoader size="xl" color="dark" />
+                <p className="font-bold text-3xl mt-4 text-center text-darkest font-sans animate-pulse">
                   Loading Your Messages
                 </p>
               </div>
@@ -168,8 +172,10 @@ const ChatWindow = ({
               <div className="w-full h-full p-2 overflow-scroll">
                 <div className="flex flex-col gap-5">
                   {allMsg.length === 0 ? (
-                    <div className="text-black w-full h-full content-center text-center text-3xl ">
-                      Send a message to start conversation!
+                    <div className="text-black w-full h-full content-center text-center text-3xl flex items-center justify-center min-h-[60vh]">
+                      <div className="glass-card p-6 bg-lite/50 border-lite shadow-lg animate-scale-in">
+                        <p>Send a message to start conversation!</p>
+                      </div>
                     </div>
                   ) : (
                     organizedMessages.map((item, index) => {
@@ -196,57 +202,62 @@ const ChatWindow = ({
       </div>
 
       {tempImg ? (
-        <div className="relative bg-[rgba(0,0,0.2)] p-2 object-contain">
-          <div className="w-full max-h-full flex justify-center ">
-            <img className="h-[200px] w-[200px] object-cover rounded-xl" src={message} alt="tempImg" />
+        <div className="relative bg-darkest/80 p-4 backdrop-blur object-contain">
+          <div className="w-full max-h-full flex justify-center">
+            <div className="relative rounded-xl overflow-hidden border-2 border-accent/70 shadow-lg">
+              <img className="h-[200px] w-[200px] object-cover" src={message} alt="tempImg" />
+            </div>
           </div>
           <IconButton
+            className="absolute bottom-3 right-3 bg-accent/80 hover:bg-accent transition-colors"
             sx={{
               position: "absolute",
-              bottom: "0",
-              right: "0",
+              bottom: "8px",
+              right: "8px",
             }}
             onClick={HandleTempImg}
           >
             {isTempImgSent ? (
-              <Send color="primary" />
+              <Send className="text-white" />
             ) : (
-              <CircularProgress size={20} color="primary" />
+              <CustomLoader size="sm" color="white" />
             )}
           </IconButton>
           <IconButton
+            className="absolute top-3 right-3 bg-darker/80 hover:bg-darker transition-colors"
             sx={{
               position: "absolute",
-              top: "0",
-              right: "0",
+              top: "8px",
+              right: "8px",
             }}
             onClick={() => {
               setTempImg(false);
               setMessage("");
             }}
           >
-            <Close color="error" />
+            <Close className="text-white" />
           </IconButton>
         </div>
       ) : (
         <div
-          className={`flex items-center justify-center m-0 relative ${
+          className={`flex items-center justify-center m-0 relative p-2 ${
             currentChat ? "" : "hidden"
-          }`}
+          } bg-darkest/95 border-t border-lite/10`}
         >
           <div>
             <IconButton
               onClick={() => {
                 setIsPickerVisible(!isPickerVisible);
               }}
+              className="hover:bg-lite/10 transition-colors"
             >
               {isPickerVisible ? (
-                <Close color="primary" />
+                <Close className="text-accent" />
               ) : (
-                <EmojiEmotions color="primary" />
+                <EmojiEmotions className="text-accent" />
               )}
             </IconButton>
-            <div className="absolute bottom-10 z-10">
+            <div className="absolute bottom-16 z-10">
               {isPickerVisible && (
                 <EmojiPicker
                   open={isPickerVisible}
@@ -256,12 +267,13 @@ const ChatWindow = ({
                   searchPlaceHolder={message}
                   skinTonesDisabled={false}
                   searchDisabled={false}
+                  theme="dark"
                 />
               )}
             </div>
           </div>
           <input
-            className="rounded-xl outline-none p-3 flex-grow"
+            className="rounded-xl outline-none p-3 flex-grow bg-lite/10 text-litest border border-lite/20 focus:ring-2 focus:ring-liter transition-all mx-2"
             onKeyDown={(e) => {
               if (e.key !== "Enter") {
                 return;
@@ -281,11 +293,14 @@ const ChatWindow = ({
             placeholder="Send Message..."
           />
           <Tooltip title="Send">
-            <IconButton onClick={HandleSend}>
+            <IconButton 
+              onClick={HandleSend}
+              className="bg-accent/80 hover:bg-accent text-white transition-colors"
+            >
               {isMessageSent ? (
-                <Send color="primary" />
+                <Send className="text-white" />
               ) : (
-                <CircularProgress size={20} color="primary" />
+                <CustomLoader size="sm" color="white" />
               )}
             </IconButton>
           </Tooltip>
@@ -294,8 +309,9 @@ const ChatWindow = ({
               onClick={() => {
                 ImageToSend.current.click();
               }}
+              className="hover:bg-lite/10 transition-colors ml-1"
             >
-              <AttachFile color="primary" />
+              <AttachFile className="text-accent" />
               <input
                 ref={ImageToSend}
                 type="file"

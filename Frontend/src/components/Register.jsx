@@ -1,15 +1,16 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Avatar, IconButton } from "@mui/material";
 import { RemoveRedEye, VisibilityOff, CloudUpload } from "@mui/icons-material";
+import CustomLoader from "./CustomLoader";
 
 export default function Register() {
   const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isCnfPasswordVisible, setIsCnfPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("chat-app-user");
@@ -36,6 +37,8 @@ export default function Register() {
       toast.error("Please fill all the fields");
       return;
     }
+    
+    setIsLoading(true);
     const toastId = toast.loading("Creating your account...");
     await axios
       .post("https://chat-app-ku8j.onrender.com/api/auth/register", formdata, {
@@ -56,6 +59,9 @@ export default function Register() {
         toast.dismiss(toastId);
         toast.error("An error occurred. Please try again.");
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -197,10 +203,18 @@ export default function Register() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 bg-accent my-5 rounded-md text-xl text-white font-bold shadow-md hover:shadow-lg hover:bg-accent/90 transition-all"
+              className="w-full text-center py-3 bg-accent my-5 rounded-md text-xl text-white font-bold shadow-md hover:shadow-lg hover:bg-accent/90 transition-all flex items-center justify-center"
               onClick={handleRegister}
+              disabled={isLoading}
             >
-              Register
+              {isLoading ? (
+                <>
+                  <CustomLoader size="sm" color="white" />
+                  <span className="ml-2">Creating account...</span>
+                </>
+              ) : (
+                "Register"
+              )}
             </button>
             
             <div className="text-center">

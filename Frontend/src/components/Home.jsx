@@ -11,6 +11,7 @@ import useGetAllUsers from "../hooks/useGetAllUsers.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { useAuthContext } from "../context/AuthContext.jsx";
+import CustomLoader from "./CustomLoader.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -150,7 +151,14 @@ const Home = () => {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={
+        <div className="w-screen h-screen flex items-center justify-center bg-darkest">
+          <div className="flex flex-col items-center gap-4">
+            <CustomLoader size="xl" color="accent" />
+            <p className="text-litest text-xl animate-pulse">Loading ChimeChat...</p>
+          </div>
+        </div>
+      }>
         <div className="flex flex-col">
           <Nav
             setIsProfileOption={setIsProfileOption}

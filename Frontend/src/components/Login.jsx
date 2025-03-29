@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -6,11 +5,13 @@ import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import { RemoveRedEye, VisibilityOff } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import CustomLoader from "./CustomLoader";
 
 export default function Login() {
   const navigate = useNavigate();
   const { setAuthUser } = useAuthContext();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("chat-app-user");
@@ -31,6 +32,7 @@ export default function Login() {
       return toast.error("Please fill all fields");
     }
     
+    setIsLoading(true);
     const toastId = toast.loading("Logging in...");
     try {
       const result = await axios.post(
@@ -62,6 +64,8 @@ export default function Login() {
       console.error(err);
       toast.dismiss(toastId);
       toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -123,10 +127,18 @@ export default function Login() {
             
             <button
               type="submit"
-              className="w-full text-center py-3 bg-accent my-5 rounded-md text-xl text-white font-bold shadow-md hover:shadow-lg hover:bg-accent/90 transition-all"
+              className="w-full text-center py-3 bg-accent my-5 rounded-md text-xl text-white font-bold shadow-md hover:shadow-lg hover:bg-accent/90 transition-all flex items-center justify-center"
               onClick={handleLogin}
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? (
+                <>
+                  <CustomLoader size="sm" color="white" />
+                  <span className="ml-2">Logging in...</span>
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
             
             <div className="text-center">
