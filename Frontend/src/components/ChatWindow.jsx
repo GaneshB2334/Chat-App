@@ -6,6 +6,7 @@ import Message from "../assets/Message";
 import DateDivider from "../assets/DateDivider";
 import Skeleton from "./Skeleton";
 import axios from "axios";
+import CustomLoader from "./CustomLoader";
 
 const ChatWindow = ({
   HandleSend,
